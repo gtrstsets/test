@@ -12,13 +12,17 @@ public class TestService {
 
     final TestDomainRepository testDomainRepository;
 
-    public Long createTest(){
-        TestDomain testDomain=testDomainRepository.save(new TestDomain().builder()
-            .title("하이하이")
-            .content("이건 내용입니다")
+    public TestRequest createTest(TestRequest testRequest){
+        TestDomain testDomain = testDomainRepository.save(new TestDomain().builder()
+            .title(testRequest.getTitle())
+            .content(testRequest.getContent())
             .build());
 
-        return testDomain.getId();
+        return new TestRequest(
+            testDomain.getId(),
+            testDomain.getTitle(),
+            testDomain.getContent(),
+            testDomain.getCreateDate());
     }
 
     public TestRequest findTest(Long id){
